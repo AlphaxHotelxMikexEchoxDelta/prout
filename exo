@@ -1,0 +1,306 @@
+📘 Exercices : Listes & Pointeurs (C/C++)
+
+10 exercices différents — énoncés détaillés + corrections masquées
+
+⸻
+
+🔵 Exercice 1 — Inversion d’un tableau avec pointeurs
+
+Écrire une fonction inverse(int *tab, int n) qui inverse un tableau en utilisant uniquement des pointeurs.
+	•	Utilise au moins une boucle for.
+	•	L’inversion doit se faire sur place (pas d’autre tableau).
+	•	Le main() doit lire la taille, allouer dynamiquement le tableau, le remplir et afficher le tableau inversé.
+
+✔️ Correction
+
+<details>
+<summary>Clique pour afficher la correction</summary>
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void inverse(int *tab, int n) {
+    int *p1 = tab;
+    int *p2 = tab + n - 1;
+    for (; p1 < p2; p1++, p2--) {
+        int tmp = *p1;
+        *p1 = *p2;
+        *p2 = tmp;
+    }
+}
+
+int main() {
+    int n;
+    printf("Taille : ");
+    scanf("%d", &n);
+
+    int *tab = malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) scanf("%d", &tab[i]);
+
+    inverse(tab, n);
+
+    for (int i = 0; i < n; i++) printf("%d ", tab[i]);
+    free(tab);
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 2 — Trouver le minimum via pointeur
+
+Créer une fonction int* min_ptr(int *tab, int n) qui retourne un pointeur vers la plus petite valeur.
+	•	Utiliser une boucle while.
+	•	Dans le main(), afficher l’adresse et la valeur minimale.
+
+✔️ Correction
+
+<details>
+<summary>Afficher la correction</summary>
+
+
+int* min_ptr(int *tab, int n) {
+    int *min = tab;
+    int i = 1;
+    while (i < n) {
+        if (tab[i] < *min) min = &tab[i];
+        i++;
+    }
+    return min;
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 3 — Compter les éléments pairs
+
+Écrire une fonction int compte_pairs(int *tab, int n)
+	•	Utilise un do…while.
+	•	Retourne le nombre d’éléments pairs.
+	•	Appeler la fonction dans le main().
+
+✔️ Correction
+
+<details><summary>Afficher la correction</summary>
+
+
+int compte_pairs(int *tab, int n) {
+    int i = 0, c = 0;
+    do {
+        if (*(tab + i) % 2 == 0) c++;
+        i++;
+    } while (i < n);
+    return c;
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 4 — Menu avec switch
+
+Faire un programme qui utilise :
+	•	Un tableau dynamique.
+	•	Un menu switch :
+	1.	Afficher le tableau
+	2.	Modifier un élément (via pointeur)
+	3.	Quitter
+	•	Le menu tourne dans une boucle while.
+
+✔️ Correction
+
+<details><summary>Afficher la correction</summary>
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, choix = 0;
+    scanf("%d", &n);
+    int *t = malloc(n * sizeof(int));
+
+    for (int i=0;i<n;i++) scanf("%d",&t[i]);
+
+    while (choix != 3) {
+        printf("1:Afficher 2:Modifier 3:Quitter\n");
+        scanf("%d",&choix);
+        switch (choix) {
+            case 1:
+                for (int i=0;i<n;i++) printf("%d ", t[i]);
+                printf("\n");
+                break;
+            case 2: {
+                int idx,val;
+                scanf("%d %d",&idx,&val);
+                *(t+idx) = val;
+                break;
+            }
+        }
+    }
+    free(t);
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 5 — Somme via pointeurs
+
+Écrire une fonction somme(int *tab, int n)
+	•	Sans utiliser d’index ([])
+	•	Seulement *(p + i) ou arithmétique de pointeurs.
+	•	Utiliser une boucle for.
+
+✔️ Correction
+
+<details><summary>Afficher</summary>
+
+
+int somme(int *tab, int n) {
+    int s = 0;
+    for (int i = 0; i < n; i++)
+        s += *(tab + i);
+    return s;
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 6 — Copier un tableau avec pointeurs
+
+Créer une fonction copie(int *src, int *dest, int n) :
+	•	Copie src dans dest via pointeurs.
+	•	Utilise une boucle while.
+
+✔️ Correction
+
+<details><summary>Afficher</summary>
+
+
+void copie(int *src, int *dest, int n) {
+    int i = 0;
+    while (i < n) {
+        *(dest + i) = *(src + i);
+        i++;
+    }
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 7 — Recherche d’un élément
+
+Écrire une fonction int* cherche(int *tab, int n, int x)
+	•	Retourne un pointeur vers la première occurrence de x
+	•	Sinon NULL
+	•	Utilise une boucle for + if.
+
+✔️ Correction
+
+<details><summary>Afficher</summary>
+
+
+int* cherche(int *tab, int n, int x) {
+    for (int i=0;i<n;i++)
+        if (*(tab+i) == x)
+            return tab+i;
+    return NULL;
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 8 — Décalage à droite
+
+Créer une fonction rotate_right(int *tab, int n) qui décale tout le tableau vers la droite :
+	•	Le dernier élément revient en première position
+	•	Utilise un do…while
+
+✔️ Correction
+
+<details><summary>Afficher</summary>
+
+
+void rotate_right(int *tab, int n) {
+    int last = tab[n-1];
+    int i = n-1;
+    do {
+        tab[i] = tab[i-1];
+        i--;
+    } while (i > 0);
+    tab[0] = last;
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 9 — Création dynamique et remplissage via fonction
+
+Créer une fonction int* creer_tableau(int n) qui :
+	•	Alloue dynamiquement un tableau
+	•	Remplit le tableau avec i * 2
+	•	Retourne le pointeur
+	•	Utilise un for
+
+✔️ Correction
+
+<details><summary>Afficher</summary>
+
+
+int* creer_tableau(int n) {
+    int *t = malloc(n * sizeof(int));
+    for (int i=0;i<n;i++) t[i] = i * 2;
+    return t;
+}
+
+</details>
+
+
+
+⸻
+
+🔵 Exercice 10 — Compter les valeurs supérieures à une limite
+
+Créer une fonction int compte_sup(int *tab, int n, int limite)
+	•	Utilise un mélange de if / else et d’un while.
+	•	Retourne combien de valeurs sont > limite.
+
+✔️ Correction
+
+<details><summary>Afficher</summary>
+
+
+int compte_sup(int *tab, int n, int limite) {
+    int i = 0, c = 0;
+    while (i < n) {
+        if (tab[i] > limite)
+            c++;
+        i++;
+    }
+    return c;
+}
+
+</details>
